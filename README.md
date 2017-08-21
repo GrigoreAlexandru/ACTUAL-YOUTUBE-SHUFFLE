@@ -1,4 +1,4 @@
-# ACTUAL-YOUTUBE-SHUFFLE - Codeignier MVC app
+# ACTUAL-YOUTUBE-SHUFFLE - Codeigniter MVC app
 
 [Live here](https://obamafuego.000webhostapp.com/shuffle/)
 
