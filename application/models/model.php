@@ -11,9 +11,14 @@ class Model extends CI_Model
 {
 	function playlistList()
 	{
-		if (!empty($this->input->post() ['input'])) {
+		if (!empty($this->input->post() ['input']) or $_COOKIE['url'] !== null) {
 			$array = [];
+			if ($_COOKIE['url'] !== null) {
+				$input = $_COOKIE['url'];
+			} else {
 			$input = $this->input->post() ['input'];
+			setcookie("url", $input, time()+3600);
+			}
 			$pageToken = "";
 			parse_str(parse_url($input) ['query'], $id);
 			if (isset($id['list'])) {
@@ -30,6 +35,8 @@ class Model extends CI_Model
 
 				while ($response['nextPageToken']);
 				shuffle($array);
+				
+
 				return $array;
 			}
 			else {
@@ -41,7 +48,7 @@ class Model extends CI_Model
 	function curl($arr, $pageToken)
 	{
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet+&maxResults=50$pageToken&playlistId=" . $arr . "&key=");
+		curl_setopt($ch, CURLOPT_URL, "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet+&maxResults=50$pageToken&playlistId=" . $arr . "&key=AIzaSyAYsJqJ7-D8bd1LxHTj2VOIcJ4jDbw9Fz8");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$result = curl_exec($ch);
 		curl_close($ch);
@@ -55,9 +62,10 @@ class Model extends CI_Model
 		$input = $this->input->post('input2');
 		parse_str(parse_url($input, PHP_URL_QUERY) , $my_array_of_vars);
 
-		// return "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/".$a."\" frameborder=\"0\" allowfullscreen></iframe>" ;
+		
 
-		return json_decode(file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" . $my_array_of_vars['v'] . "&key=") , true) ['items'][0]['snippet']['thumbnails']['maxres']['url'];
+
+		return json_decode(file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" . $my_array_of_vars['v'] . "&key=AIzaSyAYsJqJ7-D8bd1LxHTj2VOIcJ4jDbw9Fz8") , true) ['items'][0]['snippet']['thumbnails']['maxres']['url'];
 	}
 }
 
