@@ -83,7 +83,7 @@
                         echo "</div>";
                         echo form_close();
                         
-                        if (isset($this->input->post() ['input'])) {
+                        if (isset($this->input->post() ['input']) or $_COOKIE['url'] !== null) {
                           echo "<div><button type=\"button\" class=\"prev mdl-button mdl-js-button mdl-js-ripple-effect\">prev</button>\r\n<button type=\"button\" class=\"next mdl-button mdl-js-button mdl-js-ripple-effect\" style=\"float:right;\">next</button>\r\n<div id=\"player\"></div></div>";
                         }
                         
